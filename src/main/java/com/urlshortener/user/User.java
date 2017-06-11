@@ -14,9 +14,10 @@ public class User extends BaseEntity{
     @JsonIgnore
     private String password;
 
-    public User(String accountId) {
+    public User(String accountId, String password) {
         this();
         this.accountId = accountId;
+        setPassword(password);
     }
 
     protected User() {
