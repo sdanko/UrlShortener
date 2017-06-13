@@ -14,9 +14,14 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-//    @RequestMapping(method = RequestMethod.POST)
-//    ResponseEntity<?> add(@RequestBody String accountId) {
-//
-//
-//    }
+    @RequestMapping(method = RequestMethod.POST)
+    RegistrationResult add(@RequestBody RegistrationRequest registration) {
+        User user = userRepository.findByAccountId(registration.getAccountId());
+
+        if(user != null)
+            return new RegistrationResult(false, "Your account is opened", "");
+
+        return new RegistrationResult(false, "Your account is opened", "");
+
+    }
 }
