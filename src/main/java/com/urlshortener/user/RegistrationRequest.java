@@ -1,6 +1,6 @@
 package com.urlshortener.user;
 
-
+//Model za objekat koji se salje pri registraciji naloga
 public class RegistrationRequest {
     private final String AccountId;
 
