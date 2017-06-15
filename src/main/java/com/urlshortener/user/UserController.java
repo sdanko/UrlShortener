@@ -1,6 +1,7 @@
 package com.urlshortener.user;
 
 import com.urlshortener.core.BaseController;
+import com.urlshortener.core.RandomAlphaNumeric;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class UserController extends BaseController{
             return ResponseEntity.status(HttpStatus.CONFLICT).
                     body(new RegistrationResult(false, "Account with that id already exists", ""));
         try {
-            String password = randomAlphaNumeric(8);
+            String password = RandomAlphaNumeric.genereate(8);
 
             userRepository.save(new User(registration.getAccountId(), password));
 
