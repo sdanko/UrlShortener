@@ -10,13 +10,15 @@ import javax.persistence.ManyToOne;
 public class Url extends BaseEntity{
     private String url;
     private Integer redirectType;
+    private Long redirects;
     @ManyToOne
     private User user;
 
-    public Url(String url, Integer redirectType) {
+    public Url(String url, Integer redirectType, Long redirects) {
         this();
         this.url = url;
         this.redirectType = redirectType;
+        this.redirects = redirects;
 }
 
     protected Url() { super(); }
@@ -43,5 +45,13 @@ public class Url extends BaseEntity{
 
     public void setRedirectType(Integer redirectType) {
         this.redirectType = redirectType;
+    }
+
+    public Long getRedirects() {
+        return redirects;
+    }
+
+    public void setRedirects(Long redirects) {
+        this.redirects = redirects;
     }
 }

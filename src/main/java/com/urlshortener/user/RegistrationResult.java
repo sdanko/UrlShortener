@@ -2,26 +2,26 @@ package com.urlshortener.user;
 
 //Model za objekat koji se salje kao rezultat registracije
 public class RegistrationResult {
-    private final Boolean Success;
-    private final String Description;
-    private final String Password;
+    private final Boolean success;
+    private final String description;
+    private final String password;
 
 
     public RegistrationResult(Boolean success, String description, String password) {
-        Success = success;
-        Description = description;
-        Password = password;
+        this.success = success;
+        this.description = description;
+        this.password = password;
     }
 
     public Boolean getSuccess() {
-        return Success;
+        return success;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 }
