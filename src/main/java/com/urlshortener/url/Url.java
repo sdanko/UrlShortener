@@ -9,13 +9,15 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Url extends BaseEntity{
     private String url;
+    private Integer redirectType;
     @ManyToOne
     private User user;
 
-    public Url(String url) {
+    public Url(String url, Integer redirectType) {
         this();
         this.url = url;
-    }
+        this.redirectType = redirectType;
+}
 
     protected Url() { super(); }
 
@@ -33,5 +35,13 @@ public class Url extends BaseEntity{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Integer getRedirectType() {
+        return redirectType;
+    }
+
+    public void setRedirectType(Integer redirectType) {
+        this.redirectType = redirectType;
     }
 }
