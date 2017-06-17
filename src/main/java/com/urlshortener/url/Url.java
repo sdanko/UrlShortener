@@ -10,15 +10,17 @@ import javax.persistence.ManyToOne;
 public class Url extends BaseEntity{
     private String url;
     private Integer redirectType;
-    private Long redirects;
-    @ManyToOne
-    private User user;
+    private Integer redirects;
+    /*@ManyToOne
+    private User user;*/
+    private String accountId;
 
-    public Url(String url, Integer redirectType, Long redirects) {
+    public Url(String url, Integer redirectType, Integer redirects, String accountId) {
         this();
         this.url = url;
         this.redirectType = redirectType;
         this.redirects = redirects;
+        this.accountId = accountId;
 }
 
     protected Url() { super(); }
@@ -31,14 +33,6 @@ public class Url extends BaseEntity{
         this.url = url;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Integer getRedirectType() {
         return redirectType;
     }
@@ -47,11 +41,19 @@ public class Url extends BaseEntity{
         this.redirectType = redirectType;
     }
 
-    public Long getRedirects() {
+    public Integer getRedirects() {
         return redirects;
     }
 
-    public void setRedirects(Long redirects) {
+    public void setRedirects(Integer redirects) {
         this.redirects = redirects;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 }

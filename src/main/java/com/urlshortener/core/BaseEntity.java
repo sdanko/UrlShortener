@@ -14,4 +14,8 @@ public abstract class BaseEntity {
     protected BaseEntity() {
         Id = null;
     }
+
+    public Long getId() {
+        return Id;
+    }
 }
