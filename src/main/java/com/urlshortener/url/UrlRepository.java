@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface UrlRepository extends CrudRepository<Url, Long>{
     List<Url> findByAccountId(String accountId);
+    Url findByShortCode(String shortCode);
 }

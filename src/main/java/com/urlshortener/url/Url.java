@@ -14,13 +14,15 @@ public class Url extends BaseEntity{
     /*@ManyToOne
     private User user;*/
     private String accountId;
+    private String shortCode;
 
-    public Url(String url, Integer redirectType, Integer redirects, String accountId) {
+    public Url(String url, Integer redirectType, Integer redirects, String accountId, String shortCode) {
         this();
         this.url = url;
         this.redirectType = redirectType;
         this.redirects = redirects;
         this.accountId = accountId;
+        this.shortCode = shortCode;
 }
 
     protected Url() { super(); }
@@ -55,5 +57,13 @@ public class Url extends BaseEntity{
 
     public void setAccountId(String accountId) {
         this.accountId = accountId;
+    }
+
+    public String getShortCode() {
+        return shortCode;
+    }
+
+    public void setShortCode(String shortCode) {
+        this.shortCode = shortCode;
     }
 }

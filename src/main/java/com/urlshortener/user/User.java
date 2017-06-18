@@ -21,7 +21,7 @@ public class User extends BaseEntity{
     public User(String accountId, String password) {
         this();
         this.accountId = accountId;
-        //setPassword(password);
+        setPassword(password);
     }
 
     protected User() {

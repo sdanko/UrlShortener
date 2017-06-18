@@ -1,11 +1,16 @@
 package com.urlshortener.url;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.validation.constraints.NotNull;
+
 //Model za objekat koji se salje pri skracivanju url-a
 public class RegisterUrlRequest {
-    private final String url;
-    private final Integer redirectType;
+    @NotNull
+    private  String url;
+    private Integer redirectType = 302;
 
-    public RegisterUrlRequest(String url, Integer redirectType) {
+    public RegisterUrlRequest(@JsonProperty("url")String url, @JsonProperty("redirectType")Integer redirectType) {
         this.url = url;
         this.redirectType = redirectType;
     }

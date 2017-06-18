@@ -2,9 +2,12 @@ package com.urlshortener.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
+
 //Model za objekat koji se salje pri registraciji naloga
 public class RegistrationRequest {
-    private final String AccountId;
+    @NotNull
+    private String AccountId;
 
     public RegistrationRequest(@JsonProperty("AccountId")String accountId) {
         AccountId = accountId;
