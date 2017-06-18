@@ -1,7 +1,7 @@
 package com.urlshortener.core;
 
 //Utility klasa za enkodiranje i dekodiranje kratkih url-ova
-public class UrlShortener {
+public class AlphabetEncoder {
     private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final int    BASE     = ALPHABET.length();
 

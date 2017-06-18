@@ -1,15 +1,20 @@
 package com.urlshortener.url;
 
 import com.google.common.hash.Hashing;
+import com.urlshortener.core.AlphabetEncoder;
 import com.urlshortener.core.BaseController;
 import com.urlshortener.core.GlobalProperties;
-import com.urlshortener.core.UrlShortener;
+import com.urlshortener.user.User;
+import com.urlshortener.user.UserRepository;
 import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
@@ -18,11 +23,13 @@ import java.util.stream.Collectors;
 @RestController
 public class UrlController extends BaseController{
     private final UrlRepository urlRepository;
-    private GlobalProperties globalProperties;
+    private  final UserRepository userRepository;
+    private final GlobalProperties globalProperties;
 
     @Autowired
-    public UrlController(UrlRepository urlRepository, GlobalProperties globalProperties) {
+    public UrlController(UrlRepository urlRepository, UserRepository userRepository, GlobalProperties globalProperties) {
         this.urlRepository = urlRepository;
+        this.userRepository = userRepository;
         this.globalProperties = globalProperties;
     }
 
@@ -37,6 +44,8 @@ public class UrlController extends BaseController{
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                         body(new RegisterUrlResult(""));
 
+            User user = userRepository.findByAccountId(getAccountId());
+            shortCode += AlphabetEncoder.encode(user.getId().intValue());
             urlRepository.save(new Url(register.getUrl(),
                     register.getRedirectType(),0,getAccountId(), shortCode));
 
@@ -61,6 +70,28 @@ public class UrlController extends BaseController{
 
         return ResponseEntity.status(HttpStatus.OK).
                 body(result);
+    }
+
+    @RequestMapping("/{shortCode}")
+    ResponseEntity<?> redirect(@PathVariable String shortCode) {
+        try {
+            Url url = urlRepository.findByShortCode(shortCode);
+
+            if(url==null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unknown URL");
+            }
+
+            url.setRedirects(url.getRedirects()+1);
+            urlRepository.save(url);
+
+            URI uri = new URI(url.getUrl());
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setLocation(uri);
+            return ResponseEntity.status(url.getRedirectType()).
+                    headers(httpHeaders).body("");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error redirecting");
+        }
     }
 
 }
