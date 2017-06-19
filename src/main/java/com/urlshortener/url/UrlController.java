@@ -38,17 +38,21 @@ public class UrlController extends BaseController{
         try {
             String shortCode;
             final UrlValidator urlValidator = new UrlValidator(new String[]{"http", "https"});
+            //Ako je url ispravan, generirati hash za url
             if (urlValidator.isValid(register.getUrl())) {
                 shortCode = Hashing.murmur3_32().hashString(register.getUrl(), StandardCharsets.UTF_8).toString();
             } else
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).
                         body(new RegisterUrlResult(""));
-
+            //Na postojeci hash, dodati eknkodirani kljuc za id korisnika,
+            // da bi kod za url bio jedinstven po korisniku
             User user = userRepository.findByAccountId(getAccountId());
             shortCode += AlphabetEncoder.encode(user.getId().intValue());
             urlRepository.save(new Url(register.getUrl(),
                     register.getRedirectType(),0,getAccountId(), shortCode));
 
+            //Puni url koji se vraca je kombinacija hash vrijednosti
+            // i domene koja je definisana u postavkama
             String fullUrl = globalProperties.getDomain() + "/" + shortCode;
 
             return ResponseEntity.status(HttpStatus.OK).
@@ -60,7 +64,7 @@ public class UrlController extends BaseController{
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/statistics/{accountId}")
+    @RequestMapping(method = RequestMethod.GET, value = "/statistic/{accountId}")
     ResponseEntity<?> statistics(@PathVariable String accountId) {
         List<Url> urls = urlRepository.findByAccountId(accountId);
 
@@ -72,7 +76,7 @@ public class UrlController extends BaseController{
                 body(result);
     }
 
-    @RequestMapping("/{shortCode}")
+    @RequestMapping(method = RequestMethod.GET, value = "/{shortCode}")
     ResponseEntity<?> redirect(@PathVariable String shortCode) {
         try {
             Url url = urlRepository.findByShortCode(shortCode);
@@ -81,6 +85,7 @@ public class UrlController extends BaseController{
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Unknown URL");
             }
 
+            //Povecaj vrijednost redirect
             url.setRedirects(url.getRedirects()+1);
             urlRepository.save(url);
 

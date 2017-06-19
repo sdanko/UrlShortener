@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head >
+    <meta charset="UTF-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+</head>
+<body>
+<div id="root">
+    <div class="container">
+        <div class="row">
+            <div class="twelve columns">
+                <h1>URL Statistics</h1>
+                <ul>
+                    <li v-for="(val, key) in urls">
+                        <h3>{{key}}</h3>
+                        <h6>Number of redirects : {{val}}</h6>
+                        <hr />
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://vuejs.org/js/vue.js"></script>
+<script>
+    var app = new Vue({
+        el: '#root',
+        data : {urls: null},
+        mounted(){
+            this.fetchUrls();
+            this.timer = setInterval(this.fetchUrls, 300000);
+        },
+        methods: {
+            fetchUrls(){
+                axios.get("/statistic/test3").then(function(response){
+                    this.urls = response.data;
+                }.bind(this));
+            },
+            cancelAutoUpdate: function() { clearInterval(this.timer) }
+        },
+        beforeDestroy() {
+          clearInterval(this.timer);
+        }
+    });
+</script>
+</html>

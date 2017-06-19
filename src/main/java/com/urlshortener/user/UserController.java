@@ -25,6 +25,7 @@ public class UserController extends BaseController{
             return ResponseEntity.status(HttpStatus.CONFLICT).
                     body(new RegistrationResult(false, "Account with that id already exists", ""));
         try {
+            //Generisi random password
             String password = RandomAlphaNumeric.genereate(8);
 
             userRepository.save(new User(registration.getAccountId(), password));
