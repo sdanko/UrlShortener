@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/account")
 public class UserController extends BaseController{
@@ -18,7 +20,7 @@ public class UserController extends BaseController{
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    ResponseEntity<RegistrationResult> add(@RequestBody RegistrationRequest registration) {
+    ResponseEntity<RegistrationResult> add(@Valid @RequestBody RegistrationRequest registration) {
         User user = userRepository.findByAccountId(registration.getAccountId());
 
         if(user != null)
