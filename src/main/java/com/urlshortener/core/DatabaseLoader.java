@@ -17,6 +17,8 @@ public class DatabaseLoader implements ApplicationRunner{
 
     @Override
     public void run(ApplicationArguments applicationArguments) throws Exception {
-//        users.save(new User("test", "test"));
+        //Ako je baza prazna, unesi inicijalnog korisnika
+        if (users.count()==0)
+            users.save(new User("test", "test"));
     }
 }

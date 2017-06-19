@@ -76,7 +76,7 @@ public class UrlController extends BaseController{
                 body(result);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{shortCode}")
+    @RequestMapping("/{shortCode}")
     ResponseEntity<?> redirect(@PathVariable String shortCode) {
         try {
             Url url = urlRepository.findByShortCode(shortCode);

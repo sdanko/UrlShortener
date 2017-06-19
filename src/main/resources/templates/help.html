@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head >
+    <meta charset="UTF-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div id="root">
+    <div class="container">
+        <div class="row">
+            <div class="twelve columns">
+                <h3>Help</h3>
+                <hr/>
+                <h4>Installation</h4>
+                <p>
+                    Project is built using Maven, so you should have JRE and Maven(or use Maven wrapper) installed to use the application.
+                </p>
+                <hr/>
+                <h4>Launching</h4>
+                <p>
+                    You can run the application using ./mvnw spring-boot:run. Or you can build the JAR file with ./mvnw clean package. Then you can run the JAR file:
+                    <code>
+                        java -jar target/UrlShortener-0.0.1-SNAPSHOT.jar
+                    </code>
+                </p>
+                <hr/>
+                <h4>Usage</h4>
+                <p>
+                    On the initial use, you can login with username test and password test.
+                </p>
+                <hr/>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

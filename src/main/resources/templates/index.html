@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css" />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
 <body>
 <div id="root">
@@ -22,20 +23,20 @@
         </div>
     </div>
 </div>
-</body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://vuejs.org/js/vue.js"></script>
-<script>
+<script th:inline="javascript">
+/*<![CDATA[*/
     var app = new Vue({
         el: '#root',
         data : {urls: null},
         mounted(){
             this.fetchUrls();
-            this.timer = setInterval(this.fetchUrls, 300000);
+            this.timer = setInterval(this.fetchUrls, 60000);
         },
         methods: {
             fetchUrls(){
-                axios.get("/statistic/test3").then(function(response){
+                axios.get("/statistic/" + [[${accountId}]]).then(function(response){
                     this.urls = response.data;
                 }.bind(this));
             },
@@ -45,5 +46,7 @@
           clearInterval(this.timer);
         }
     });
+/*]]>*/
 </script>
+</body>
 </html>
